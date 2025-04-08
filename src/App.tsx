@@ -1,10 +1,22 @@
-import "./App.css";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import Login from "./components/Login";
+import Signup from "./components/Signup";
+import BookingPage from "./components/BookingPage";
 
 function App() {
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<BookingPage />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/signup" element={<Signup />}></Route>
+      </Routes>
+    </Router>
   );
 }
 
