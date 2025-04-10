@@ -4,6 +4,7 @@ import {
   getTicketDataApi,
   resetTicketsApi,
 } from "../middleware/api";
+import { toast } from "react-toastify";
 // import getTicketDataApi from "../../middleware/api.ts";
 
 type Seat = {
@@ -21,21 +22,40 @@ const BookingPage = () => {
   const bookTicketsHandler = async () => {
     try {
       const ticketCount = inputValue;
+
+      if (ticketCount == 0) {
+        toast.error("Zero Seats selected !");
+        return;
+      }
+
+      if (ticketCount >= 8) {
+        toast.error("You can Select at most 7 Seats at a time !");
+        return;
+      }
+
       const res: any = await bookTicketsApi(ticketCount);
 
       const bookTicketRes = res.data;
 
       if (bookTicketRes.success) {
         setCurrentBooked(bookTicketRes.bookedSeats);
+        toast.success(bookTicketRes.message);
+      } else {
+        toast.error(bookTicketRes.message);
       }
+
       const resp: any = await getData();
-    } catch (error) {
+    } catch (error: any) {
       console.log("error:", error);
+      toast.error(error.message);
     }
   };
 
   const ticketResetHandler = async () => {
     const res: any = await resetTicketsApi();
+
+    if (res.data.success) toast.success(res.data.message);
+    else toast.error(res.data.message);
 
     await getData();
 
@@ -49,7 +69,12 @@ const BookingPage = () => {
   const getData = async () => {
     try {
       const res: any = await getTicketDataApi();
-      setBookingData(res.data.seatsData);
+      if (res.data.success) {
+        setBookingData(res.data.seatsData);
+        toast.success(res.data.success);
+      } else {
+        toast.error(res.data.message);
+      }
     } catch (error) {
       console.log("error:", error);
     }
