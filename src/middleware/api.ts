@@ -17,9 +17,11 @@ export const getTicketDataApi = () => {
 };
 
 export const bookTicketsApi = (ticketCount: number, userId: string = "") => {
+  console.log(userId);
   return axiosInstance.post("/book-tickets", { ticketCount });
 };
 
 export const resetTicketsApi = (userId: string = "") => {
+  console.log({ userId });
   return axiosInstance.post("/reset-tickets");
 };

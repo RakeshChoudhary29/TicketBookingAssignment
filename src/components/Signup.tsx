@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { registerUserApi } from "../middleware/api";
-import { redirect, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [name, setName] = useState("");

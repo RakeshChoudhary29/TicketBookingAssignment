@@ -44,7 +44,7 @@ const BookingPage = () => {
         toast.error(bookTicketRes.message);
       }
 
-      const resp: any = await getData();
+      await getData();
     } catch (error: any) {
       console.log("error:", error);
       toast.error(error.message);
