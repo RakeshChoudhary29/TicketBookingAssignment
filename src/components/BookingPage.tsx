@@ -13,12 +13,21 @@ type Seat = {
   bookedBy: string | null;
 };
 
+function TransparentLoader() {
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+      <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
+}
+
 const BookingPage = () => {
   const [bookingData, setBookingData] = useState<Seat[]>([]);
 
   const [currentBooked, setCurrentBooked] = useState<number[]>([]);
   const [inputValue, setInputValue] = useState<number>(0);
   const [loading, setLoading] = useState(false);
+  const [mainLoader, setMainLoader] = useState(false);
 
   const [bookedSeatsCount, setBookedSeatsCount] = useState<number>(0);
 
@@ -36,6 +45,7 @@ const BookingPage = () => {
         return;
       }
       setLoading(true);
+      setMainLoader(true);
       const res: any = await bookTicketsApi(ticketCount);
 
       const bookTicketRes = res.data;
@@ -49,10 +59,12 @@ const BookingPage = () => {
 
       await getData();
       setLoading(false);
+      setMainLoader(false);
     } catch (error: any) {
       console.log("error:", error);
       toast.error(error.message);
       setLoading(false);
+      setMainLoader(false);
     }
   };
 
@@ -69,6 +81,7 @@ const BookingPage = () => {
 
   const getData = async () => {
     try {
+      setMainLoader(true);
       const res: any = await getTicketDataApi();
       if (res.data.success) {
         setBookingData(res.data.seatsData);
@@ -82,7 +95,9 @@ const BookingPage = () => {
       } else {
         toast.error(res.data.message);
       }
+      setMainLoader(false);
     } catch (error) {
+      setMainLoader(false);
       console.log("error:", error);
     }
   };
@@ -97,6 +112,7 @@ const BookingPage = () => {
   return (
     <div className="p-6 space-y-6 max-w-6xl mx-auto">
       {" "}
+      {mainLoader && <TransparentLoader />}
       {/* Smaller padding and overall width */}
       <h1 className="text-2xl font-bold text-center text-gray-800">
         Booking Page

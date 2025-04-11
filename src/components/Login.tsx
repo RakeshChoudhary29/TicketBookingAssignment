@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { loginUserApi } from "../middleware/api";
 import { toast } from "react-toastify";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -21,7 +21,6 @@ const Login = () => {
       const { success, message, token = undefined } = res.data;
 
       localStorage.setItem("token", token);
-   
 
       if (success) {
         toast.success(message);
@@ -35,6 +34,12 @@ const Login = () => {
       toast.error(error.message);
     }
   };
+
+  useEffect(() => {
+    toast.success(
+      "Backend is hosted on Render so it might take a few seconds to wake up when accessed."
+    );
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
