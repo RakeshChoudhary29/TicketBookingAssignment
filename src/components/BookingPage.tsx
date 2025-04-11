@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 // import getTicketDataApi from "../../middleware/api.ts";
 
 type Seat = {
-  seatNumber: number;
+  seat_number: number;
   booked: boolean;
   bookedBy: string | null;
 };
@@ -60,7 +60,6 @@ const BookingPage = () => {
     await getData();
 
     setCurrentBooked([]);
-
   };
 
   const getData = async () => {
@@ -98,7 +97,7 @@ const BookingPage = () => {
                   value.booked ? "bg-red-400" : "bg-green-500"
                 }`}
               >
-                {value.seatNumber}
+                {value.seat_number}
               </div>
             );
           })}
