@@ -1,19 +1,38 @@
 import { useState } from "react";
+import { loginUserApi } from "../middleware/api";
+import { toast } from "react-toastify";
+import { redirect, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>();
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
+  const navigate = useNavigate();  
 
-    if (!email.trim()) console.log("provide a valid email");
+  const handleSubmit = async (e: any) => {
+    try {
+      e.preventDefault();
 
-    if (!password.trim()) console.log("provide a valid password");
+      if (!password.trim()) return setError("provide a valid password");
 
-    
+      const res: any = await loginUserApi({ mailId: email, password });
 
+      const { success, message, token = undefined } = res.data;
+
+      localStorage.setItem("token", token);
+
+      if (success) {
+        toast.success(message);
+        console.log("here");
+        navigate("/ticket-booking");
+      } else {
+        toast.error(message);
+      }
+    } catch (error: any) {
+      console.log("error", error);
+      toast.error(error.message);
+    }
   };
 
   return (

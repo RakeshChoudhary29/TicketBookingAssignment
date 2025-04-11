@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { registerUserApi } from "../middleware/api";
+import { redirect, useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -8,6 +11,44 @@ const Signup = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
+  const navigate = useNavigate();
+
+  const handleSignup = async (e: any) => {
+    e.preventDefault();
+
+    // 🔐 Frontend Validation
+    if (!name || !email || !password || !confirmPassword) {
+      return setError("All fields are required");
+    }
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      return setError("Invalid email format");
+    }
+
+    if (password.length < 6) {
+      return setError("Password must be at least 6 characters");
+    }
+
+    if (password !== confirmPassword) {
+      return setError("Passwords do not match");
+    }
+
+    setError("");
+    setSuccess("Form submitted ✅");
+
+    const res: any = await registerUserApi({ name, mailId: email, password });
+
+    const { success, message, token } = res.data;
+
+    if (success) {
+      toast.success(message);
+      localStorage.setItem("token", token);
+      navigate("/ticket-booking");
+    } else {
+      toast.error(message);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
@@ -16,10 +57,7 @@ const Signup = () => {
         </h2>
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
         {success && <p className="text-green-500 text-sm mb-4">{success}</p>}
-        <form
-          onSubmit={() => console.log("signup called")}
-          className="space-y-4"
-        >
+        <form onSubmit={handleSignup} className="space-y-4">
           <div>
             <label htmlFor="name" className="block text-gray-700">
               Name

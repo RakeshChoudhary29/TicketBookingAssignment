@@ -61,9 +61,6 @@ const BookingPage = () => {
 
     setCurrentBooked([]);
 
-    if (!res || !res.success) {
-      console.log("abceddfas");
-    }
   };
 
   const getData = async () => {
