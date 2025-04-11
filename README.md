@@ -1,45 +1,31 @@
+# 🎫 Ticket Booking Assignment
 
+A simple ticket booking web application with a React frontend and a Node.js backend.
 
+## 🔗 Hosted Page
 
-80 seats in a train
-7 in one row and  3 in last row
+You can try the live version of the app here:  
+👉 [https://ticketbookingassignment.onrender.com/ticket-booking](https://ticketbookingassignment.onrender.com/ticket-booking)
 
-1 2 ... 7 
+---
 
-one person can book atmost 7 seats at a time.
-try to book seats in one row.
-if not in one row then booking is done such that they are nearby.
-user can book as number until the coch is full
-user login and signup
+## 📁 Project Repositories
 
-no user can book the booked seats of other users untils those seats are cancelled or reset.
+- **Frontend (React)**: *Included in this project*
+- **Backend Service (Node.js/Express)**:  
+  🔗 [https://github.com/RakeshChoudhary29/TicketBookingAssignmentService](https://github.com/RakeshChoudhary29/TicketBookingAssignmentService)
 
+---
 
-3 colors => booked , available , myBookings 
+## 🚀 Getting Started with Frontend (React)
 
-onReset => make the user bookings available
+Follow the steps below to set up the frontend on your local machine:
 
-Database 
+### 1. Clone the Repository
 
-multiple seats are booked at a time 
-seats => seatNumber , isBooked , userId, transactionId, 
+```bash
+git clone <your-frontend-repo-url>
+cd <your-frontend-repo-directory>
 
-
-1. user -> (name,password,emailId)
-2. Bookings -> ()
-3. transactons -> userid,(booked,cancelled,reset)
-
-
-bookings/login-> after login 
-
-bookings?userid=id
-on new bookings and all put a post request
-
-
-
-request will be sent by userid
-
-[{seatNumber:,isBooked:,userid=myid}]
-
-
-
+npm i
+npm run dev
