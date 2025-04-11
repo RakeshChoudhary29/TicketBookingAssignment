@@ -7,6 +7,7 @@ import {
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import BookingPage from "./components/BookingPage";
+import ProtectedRoute from "./middleware/protectedRoutes";
 
 function App() {
   return (
@@ -14,7 +15,13 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/signup" element={<Signup />}></Route>
-        <Route path="/ticket-booking" element={<BookingPage />}></Route>
+
+        {/* Protected Routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/ticket-booking" element={<BookingPage />}></Route>
+        </Route>
+
+        <Route path="*" element={<Navigate to="/login" replace />}></Route>
       </Routes>
     </Router>
   );

@@ -8,7 +8,7 @@ const Login = () => {
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>();
 
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: any) => {
     try {
@@ -21,6 +21,7 @@ const Login = () => {
       const { success, message, token = undefined } = res.data;
 
       localStorage.setItem("token", token);
+   
 
       if (success) {
         toast.success(message);
